@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="js/vue.min.js"></script>
+</head>
+<body id="app">
+<input type="text" v-model="msg">
+<input type="button" value="发表" @click="add_note">
+<ul>
+    <li c-for="(value,index) in notebook" :key="index"> <span>{{value}}</span><a href="javascript:;" @click="delnote(index)">删除</a></li>
+    <span>总数量：{{notebook.length}}条</span>
+    <input type="button" value="清空留言板" @click="delall" v-show="notebook.length!=0">
+
+</ul>
+<script>
+    new Vue({
+        el:"app",
+        data:{
+            notebook:[],
+            msg:'',getItemgit
+        },a
+        methods:{
+            add_note(){
+                if (this.msg){
+                    this.notebook.unshift(this.notebook)
+                }this.msg=''
+            },delnote(index){
+                this.notebook.splice(index,1)
+            },delall(){
+                this.notebook =[];
+            }
+        }
+    })
+</script>
+</body>
+</html>

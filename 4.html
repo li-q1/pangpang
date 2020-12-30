@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="js/vue.min.js"></script>
+</head>
+<body>
+<div class="app">
+sdga
+        <h3>{{username}}</h3>
+    {{msg.toUpperCase()}}
+    <h3>{{msg}},欢迎你跟我学习vue的使用</h3>
+    <span v-text="msg">欢迎跟我学习vue的使用</span>
+    <input type="button" value="点我变年轻" v-on:click="change_age">
+    <input type="button" value="点击" v-on:click="add_age">
+    <input type="button" value="点击" v-on:click="low_age">
+    <input type="button" value="修改count值" @click="change_count(80,'tom')">
+    <p @click="click_me()">点击</p>
+    <p @click="click_me2">点击</p>
+    <h3 v-show="false">{{msg}}</h3>
+    <h3 v-show="isshow">{{msg}}</h3>
+    <input type="button" value="change" @click="showmsg">
+    <h2 v-show="count>=20"> 你老了</h2>
+    <input type="button" value="点击" @click="changecount">
+</div>
+<script>
+    new Vue(
+        {
+            el:"#app",
+            date: {
+                username:"百知教育",
+                age:"23",
+                user:{'username':'小黑',password:"123456"},
+                arr:['北京',"天津","上海"],
+                user_list:[{"username": "小黑", password: "123456"},
+                    {"username": "小白", password: "555555"},
+                    {"username": "小绿", password: "666666"},],
+                msg:'hello world'
+                ,count:23,
+                isshow:false
+                ,msg:"上课一定要好好听课",
+            },
+            methods:{
+                change_age:function () {
+                    this.age--;
+                },
+                add_age(){
+                    this.age++;
+                },
+                low_age:function () {
+                    this.age--;
+                },
+                click_me(){
+                    console.log(event)
+                },
+                click_me2(){
+                    console.log(event)
+                },
+                change_count(number,name){
+                    console.log(name);
+                            this.count = number;
+                        }
+                showmsg(){
+                    this.isshow = !this.isshow;
+                },
+                changecount(){
+                    this.count--;
+                }
+            }
+        })
+</script>
+</body>
+</html>
