@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<com>   </com>
+<com>   </com>
+<com>   </com>
+<h3>{{username}}</h3><div id="app">
+
+    <com user="tom"></com>
+    <com user="tom" color="red"></com>
+    <com user="tom" color="blue"></com>
+    <com @btn="clickme"></com>
+</div>
+</body>
+<script src="js/vue.min.js"></script>
+<script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+
+<script>
+    let app =(x,y) => console.log(x*y);
+    let app2 =x =>console.log(x*2);
+    let app3 =function (a, b) {
+        return a+b;
+    }
+    let app4 = (a ,b) =>a+b;
+    let app5 =()=>console.log('vue');
+    let app6 =a=>a*5;
+    let app7 =function (a) {
+        return a*5;
+    }
+    new Vue({
+        el:"#app",
+        date:{count:40,},
+        methods:{
+            number(){
+                this.count--;
+            },
+            beforeCreate:function () {
+                console.log("beforeCreate:"+this.count);
+            },
+            created:function () {
+                console.log("create:"+this.count)
+            },
+            beforeMount:function () {
+                console.log("beforeMount:"+document.getElementById('span').innerText);
+            },
+            mounted:function (){
+
+                console.log("beforeMount:"+document.getElementById('span').innerText);
+            },
+            beforeUpdate:function () {
+
+                console.log("beforeUpdate:"+document.getElementById('span').innerText);
+            },
+            update:function () {
+
+                console.log("update:"+document.getElementById('span').innerText);
+            },
+            beforeDestroy:function () {
+
+                console.log("beforeDestroy:"+document.getElementById('span').innerText);
+            },
+            destroy:function (){
+
+                console.log("destroy:"+document.getElementById('span').innerText);
+            }
+        }
+
+
+
+
+    })
+    let first = {
+        template: `<div>
+这是一个组件
+<br>
+<h3>这是组件中的data：{{username}}</h3>
+</div>`,
+        data:function () {
+            return {username: "小黑"}
+        }
+    }
+    Vue.component('com',first)
+    let second ={
+        template:`<div>
+这是我的分页组件
+<h3>{{count}}</h3>
+<button @click="change">点我</button>
+<h3>{{tittle}}</h3>
+</div>`
+        ,
+        data: function () {
+            return {count: 50, tittle: "www"}
+        },mothods:{
+            change(){
+                this.count--;
+            },
+        },
+        created:function () {
+            if (this.count>=50)
+            {
+                this.tittle="中老年"
+            }else{this.tittle='强壮年'}}
+    }
+    Vue.component('second',second)
+    new Vue({
+        el:"#main"
+
+    })
+    let first ={
+        template:`<div>这是我的first组件</div>`
+
+    }
+    let second={
+        template:`<div>这是我的second组件</div>`
+    }
+    Vue.component('first',first)
+    new Vue({
+        el:'#app',
+        data:{},
+        components:{
+            'second':second,
+        }
+    })
+    let com ={
+        template:`<div :class="color">这是我的第一个组件</div>`
+        ,props:['user','color'],
+        created:function () {
+            console.log(this.user)
+        }}
+    new Vue({
+        el:'#app',
+        data:{},
+        components:{
+            com:com,
+        }
+    })
+    let app = {
+        template:`<div>
+这是父组件传递过来的用户名===>{{text}}
+</div>`,
+        props: ["text"]
+    }
+    new Vue({
+        el:'#app',
+        data:{
+            username:'',
+        },
+        components:{
+            app:app
+        }
+    })
+    let com ={
+        template:`<div>这是子组件：
+    <button @click="clickbtn">按钮</button>
+</div>`,
+        methods:{
+            clickbtn(){
+                this.$emit('btn',this.name);
+            },
+        },
+        data:function () {
+            return {name:'百知教育'}
+        }
+    }
+    new Vue({
+        el:'#app',
+        data:{
+            username:'小黑',
+        },
+        methods:{
+            clickme(username) {
+                this.username =username;
+            }
+        },
+        components:{
+            com:com
+        }
+    })
+    let first = {
+        template: `<div>百知教育管理系统</div>
+        `
+    }
+
+    let second = {
+        template: `<div>学生管理</div>
+        `
+    }
+    let myRouter =new VueRouter({
+        routes:[{path:"/index",component:first},{path:"/stu",component:second},]
+    })
+    new Vue({
+        el:"#app",
+        date:{},
+        components:{
+            first:first,
+            second:second
+        },
+        router:myRouter,
+    })
+</script>
+<h3>主页的页头</h3>
+<router-link to="/index"> 系统首页</router-link>
+<router-link to="/stu">学生管理</router-link>
+<hr>
+<router-view></router-view>
+</html>
